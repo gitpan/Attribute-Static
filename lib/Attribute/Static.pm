@@ -3,7 +3,7 @@ package Attribute::Static;
 use strict;
 use warnings;
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 use Attribute::Handlers;
 
@@ -12,7 +12,7 @@ sub UNIVERSAL::Static : ATTR(CODE) {
     my $meth = *{$symbol}{NAME};
     no warnings 'redefine';
     *{$symbol} = sub {
-        my $class = shift;
+        my $class = $_[0];
         if ($class ne $package) {
             require Carp;
             Carp::croak "$meth() is a static method of $package!";
